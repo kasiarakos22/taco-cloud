@@ -14,3 +14,7 @@ insert into Ingredient (id, name, type) values ('CHED', 'Cheddar', 'CHEESE');
 insert into Ingredient (id, name, type) values ('JACK', 'Monterrey Jack', 'CHEESE');
 insert into Ingredient (id, name, type) values ('SLSA', 'Salsa', 'SAUCE');
 insert into Ingredient (id, name, type) values ('SRCR', 'Sour Cream', 'SAUCE');
+
+insert into users (username, password, enabled) values ('kasiarakos', 'password', true);
+insert into authorities (username, authority) values ('kasiarakos', 'USER')
+
