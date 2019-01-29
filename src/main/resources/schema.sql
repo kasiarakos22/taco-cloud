@@ -38,3 +38,5 @@ create table if not exists Taco_Order_Tacos (
 
 alter table Taco_Order_Tacos add foreign key (tacoOrder) references Taco_Order(id);
 alter table Taco_Order_Tacos add foreign key (taco) references Taco(id);
+
+CREATE sequence  hibernate_sequence

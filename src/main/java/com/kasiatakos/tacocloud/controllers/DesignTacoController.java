@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.kasiatakos.tacocloud.domain.Ingredient;
 import com.kasiatakos.tacocloud.domain.Order;
 import com.kasiatakos.tacocloud.domain.Taco;
-import com.kasiatakos.tacocloud.repositories.IngredientRepository;
-import com.kasiatakos.tacocloud.repositories.TacoRepository;
+import com.kasiatakos.tacocloud.repositories.jpa.IngredientRepository;
+import com.kasiatakos.tacocloud.repositories.jpa.TacoRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

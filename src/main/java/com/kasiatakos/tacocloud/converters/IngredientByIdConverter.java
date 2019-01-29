@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import com.kasiatakos.tacocloud.domain.Ingredient;
-import com.kasiatakos.tacocloud.repositories.IngredientRepository;
+import com.kasiatakos.tacocloud.repositories.jpa.IngredientRepository;
 
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
