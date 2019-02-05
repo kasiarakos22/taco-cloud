@@ -41,13 +41,20 @@ alter table Taco_Order_Tacos add foreign key (taco) references Taco(id);
 
 CREATE sequence  hibernate_sequence;
 
-create table users(
-      username varchar_ignorecase(50) not null primary key,
+create table user(
+      username varchar_ignorecase(50) not null,
       password varchar_ignorecase(50) not null,
-      enabled boolean not null);
+      enabled boolean not null default true,
+      city varchar_ignorecase(50) not null,
+      fullname varchar_ignorecase(50) not null,
+      phone_number varchar_ignorecase(50) not null,
+      state varchar_ignorecase(50) not null,
+      street varchar_ignorecase(50) not null,
+      zip varchar_ignorecase(50) not null,
+      id identity );
 
  create table authorities (
       username varchar_ignorecase(50) not null,
       authority varchar_ignorecase(50) not null,
-      constraint fk_authorities_users foreign key(username) references users(username));
+      constraint fk_authorities_users foreign key(username) references user(username));
       create unique index ix_auth_username on authorities (username,authority);
