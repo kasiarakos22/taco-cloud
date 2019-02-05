@@ -1,44 +1,59 @@
 package com.kasiatakos.tacocloud.configuration;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import com.kasiatakos.tacocloud.services.UserDetailService;
+
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource dataSource;
+    private UserDetailService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       /* auth
-            .inMemoryAuthentication()
-                .withUser("buzz")
-                .password("infinity")
-                .authorities("ROLE_USER")
-            .and()
-                .withUser("woody")
-                .password("bullseye")
-                .authorities("ROLE_USER");*/
 
-        auth
-            .jdbcAuthentication()
-            .dataSource(dataSource)
-            .usersByUsernameQuery(
-                "select username, password, enabled from Users " +
-                    "where username=?")
-            .authoritiesByUsernameQuery(
-                "select username, authority from authorities " +
-                    "where username=?")
-            .passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(encoder());
 
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+            .antMatchers("/design", "/orders")
+            .hasRole("USER")
+            .antMatchers("/", "/**").permitAll()
+        .and()
+            .formLogin()
+            .loginPage("/login")
+            .defaultSuccessUrl("/")
+        .and()
+            .logout()
+            .logoutSuccessUrl("/")
+        .and()
+            .csrf()
+            .ignoringAntMatchers("/h2-console/**")
+        .and()
+            .headers()
+            .frameOptions()
+            .disable();
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 }
+
+
